@@ -1,0 +1,50 @@
+Notes from parallelism
+ - concurrency was about the design of
+a system, parallelism is about the exe-
+cution model.
+
+- The reference types supporting parallelism are futures and promises.
+- Futures are usefule for partitioning a typically sequential operation into discrete parts.
+- These parts can then be asynchronously processed across numerouse threads that will block if the enclosed expression hasn't finished.
+- All subsequent derefencing will return the calculated value.
+
+- Clall backs are I nice way in utilizing futures
+- You may call out to a remote-procedure  called RPC, wait for it to complete, and then proceed with some task depending on the return value.
+
+- In this section we create a domain DSL to create a tree built on a simple node structure of tables with the keys :tag, :attrs, and :content. This structure is used in many clojure libraries. Clojure provides some core functions in the clojure.xml and clojure.zip namespaces to help make sense of the feed.
+
+*  What does RSS stand for?
+- Twitter provides a feed of status messages in a digest format. One such format provided by services like Twitter is known as the Rich Site Summary version 2.0, or RSS for short
+
+;;from core.clj
+
+(comment ;; a simple use of a future
+  (time (let [x (future
+                (do (Thread/sleep 5000)
+                    (+ 41 1)))]
+          [@x @x @x])))
+
+
+
+(comment
+  NOTES
+  There is more to the content of a typical RSS or atom feed than shown in the example Twitter timeline.,
+  but fot this example you will retrieve only the title of the individual feed elements. To do this we dot the following-
+  1) Parse the xml and put it into a convienient format, we do this like so
+* create a domain DSL to create a tree built on a simple node structure of tables with the keys
+:TAG, :ATTRS, and :CONTENT. This structure is used in many clojure libs.
+2) Use the core functions clojure.xml and clojure.zip
+
+
+;; clojure.xml/parse you can retreive the XML for a twitterr RSS feed and then convert it into the familiar tree format.
+;;clojure.zip/xml-zip convert the structure into another data structure called a zipper.
+(comment
+         RSS feeds and Atom feeds are slightly different. Therefore, navigating to the feed elements require a different sequence of zipper steps to acheive. To normalize the feed elements into a common strucuture
+         we take the zipper from the XML/PARSE step and detect the precise feed type (RSS or Atom).)
+
+The follwing is a review of the libraries
+- clojure.xml
+- clojure.zip
+
+
+
